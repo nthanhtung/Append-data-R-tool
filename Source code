@@ -1,0 +1,28 @@
+library(readxl)
+library(dplyr)
+
+#set folder directory
+dir <- 'C:/Users/Tung.Nguyen/Unilever/Ai, Ha-Vs-Nhat - Outlet analytic total Cat/Raw data/New data'
+
+setwd(dir)
+file.list <- list.files(pattern = '*.xlsx')
+file.list
+  
+read_excel_allsheets <- function(filename, tibble = FALSE) {
+    # I prefer straight data.frames
+    # but if you like tidyverse tibbles (the default with read_excel)
+    # then just pass tibble = TRUE
+    sheets <- readxl::excel_sheets(filename)
+    x <- lapply(sheets, function(X) readxl::read_excel(filename, sheet = X, col_names = TRUE, col_types = "text"))
+    df <- bind_rows(x)
+    df
+}
+        
+
+#scan all excel file in the folder
+df.list <-lapply(file.list,read_excel_allsheets)
+df <- bind_rows(df.list)
+
+#write new csv file
+
+write.csv(df, file = "Updated_raw.csv")
