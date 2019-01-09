@@ -1,3 +1,6 @@
+install.packages('readxl', repos='http://cran.us.r-project.org')
+install.packages('dplyr', repos='http://cran.us.r-project.org')
+
 library(readxl)
 library(dplyr)
 
